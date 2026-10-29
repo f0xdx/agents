@@ -1,0 +1,27 @@
+{
+  "version": "1.2.24+183154.baac4cb1308e",
+  "systems": {
+    "x86_64-linux": {
+      "url": "https://sfc-repo.snowflakecomputing.com/cortex-code-cli/a4643c4278/1.2.24%2B183154.baac4cb1308e/coco-1.2.24%2B183154.baac4cb1308e-linux-amd64.tar.gz",
+      "sha256": "2e938ecfc04aab2983e631e613b033c2fa8d481d0b14bec2d04f9bd469676b3f"
+    },
+    "aarch64-linux": {
+      "url": "https://sfc-repo.snowflakecomputing.com/cortex-code-cli/a4643c4278/1.2.24%2B183154.baac4cb1308e/coco-1.2.24%2B183154.baac4cb1308e-linux-arm64.tar.gz",
+      "sha256": "ecc4d15ffda2103ea6d7c1242d7871b25fd0ef1de1de1e41890080dcdc1152a7"
+    },
+    "aarch64-darwin": {
+      "url": "https://sfc-repo.snowflakecomputing.com/cortex-code-cli/a4643c4278/1.2.24%2B183154.baac4cb1308e/coco-1.2.24%2B183154.baac4cb1308e-darwin-arm64.tar.gz",
+      "sha256": "8b8cd88476ff8d7e14486832c0982519d11c9b7da3608035ee6ecc7489b7a64f"
+    }
+  },
+  "acp": {
+    "registryId": "cortex-code",
+    "mode": "internal",
+    "command": "cortex-code",
+    "args": [
+      "acp",
+      "serve"
+    ],
+    "env": {}
+  }
+}

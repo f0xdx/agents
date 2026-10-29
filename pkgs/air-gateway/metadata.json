@@ -1,0 +1,17 @@
+{
+  "version": "2.1.0",
+  "systems": {
+    "x86_64-linux": {
+      "url": "https://jetbrains-central-cli.s3.eu-west-1.amazonaws.com/central/2.1.0/central_2.1.0_linux_x86_64.tar.gz",
+      "sha256": "ca3f18cf2800b523f6c77553ae6aeb1018fd7460a386f22cad3a06a37ff54f81"
+    },
+    "aarch64-linux": {
+      "url": "https://jetbrains-central-cli.s3.eu-west-1.amazonaws.com/central/2.1.0/central_2.1.0_linux_arm64.tar.gz",
+      "sha256": "cd814784ca2f42a25d2b6cfdbc00bdb848ad2a56b6753a4674c752cf5e297fc4"
+    },
+    "aarch64-darwin": {
+      "url": "https://jetbrains-central-cli.s3.eu-west-1.amazonaws.com/central/2.1.0/central_2.1.0_darwin_arm64.tar.gz",
+      "sha256": "5b938811751881307ce362a329d32c7cb599b324134a55ea42953e5462d36fe9"
+    }
+  }
+}

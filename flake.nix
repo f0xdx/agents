@@ -16,12 +16,13 @@
       junieOutputs = import ./pkgs/junie/outputs.nix inputs;
       cortexCodeOutputs = import ./pkgs/cortex-code/outputs.nix inputs;
       airGatewayOutputs = import ./pkgs/air-gateway/outputs.nix inputs;
+      antigravityAcpOutputs = import ./pkgs/antigravity-acp/outputs.nix inputs;
     in
     utils.lib.eachSystem supportedSystems (system:
       let
         pkgs = import nixpkgs {
           inherit system;
-          config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "junie" "cortex-code" "air-gateway" ];
+          config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "junie" "cortex-code" "air-gateway" "antigravity-acp" ];
         };
 
         updateRuntimeInputs = with pkgs; [
@@ -53,6 +54,7 @@
           junie = junieOutputs.packages.${system}.junie;
           cortex-code = cortexCodeOutputs.packages.${system}.cortex-code;
           air-gateway = airGatewayOutputs.packages.${system}.air-gateway;
+          antigravity-acp = antigravityAcpOutputs.packages.${system}.antigravity-acp;
           default = junieOutputs.packages.${system}.junie;
         };
 
@@ -63,7 +65,7 @@
 
           shellHook = ''
             echo "Nix Flakes Management Shell"
-            echo "Available commands: nix run .#update-flakes, nix run .#update-junie, nix run .#update-cortex-code, nix run .#update-air-gateway"
+            echo "Available commands: nix run .#update-flakes, nix run .#update-junie, nix run .#update-cortex-code, nix run .#update-air-gateway, nix run .#update-antigravity-acp"
           '';
         };
 
@@ -74,6 +76,7 @@
             bash scripts/update_junie.sh
             bash scripts/update_cortex_code.sh
             bash scripts/update_air_gateway.sh
+            bash scripts/update_antigravity_acp.sh
             echo "All flakes updated."
           '';
 
@@ -88,6 +91,10 @@
           update-air-gateway = mkUpdateApp "update-air-gateway" "Update the Air Gateway (Central CLI) flake metadata and locks" ''
             exec bash scripts/update_air_gateway.sh
           '';
+
+          update-antigravity-acp = mkUpdateApp "update-antigravity-acp" "Update the Google Antigravity ACP flake metadata and locks" ''
+            exec bash scripts/update_antigravity_acp.sh
+          '';
         };
       }
     ) // {
@@ -96,6 +103,7 @@
         junie = junieOutputs.homeManagerModules.junie;
         cortex-code = cortexCodeOutputs.homeManagerModules.cortex-code;
         air-gateway = airGatewayOutputs.homeManagerModules.air-gateway;
+        antigravity-acp = antigravityAcpOutputs.homeManagerModules.antigravity-acp;
       };
 
       # Aggregate Overlays from shared sub-flake outputs
@@ -103,10 +111,12 @@
         junie = junieOutputs.overlays.junie;
         cortex-code = cortexCodeOutputs.overlays.cortex-code;
         air-gateway = airGatewayOutputs.overlays.air-gateway;
+        antigravity-acp = antigravityAcpOutputs.overlays.antigravity-acp;
         default = final: prev:
           (junie final prev)
           // (cortex-code final prev)
-          // (air-gateway final prev);
+          // (air-gateway final prev)
+          // (antigravity-acp final prev);
       };
     };
 }

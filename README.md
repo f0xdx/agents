@@ -31,6 +31,7 @@ To update a specific tool:
 nix run .#update-junie
 nix run .#update-cortex-code
 nix run .#update-air-gateway
+nix run .#update-antigravity-acp
 ```
 
 ## Available Flakes
@@ -46,7 +47,7 @@ nix run .#update-air-gateway
 
 | Flake | Description | ACP Implementation | License | Directory |
 |---|---|---|---|---|
-| Antigravity ACP | Google Antigravity ACP Server | Prebuilt Binary (`agy_acp_server.par`) | Proprietary ([Terms](https://antigravity.google/terms)) | Planned (`pkgs/antigravity-acp`) |
+| Antigravity ACP | Google Antigravity ACP Server | Prebuilt Binary (`agy_acp_server.par`) | Proprietary ([Terms](https://antigravity.google/terms)) | [`pkgs/antigravity-acp`](./pkgs/antigravity-acp) |
 | Codex ACP | OpenAI Codex ACP Adapter | npm package (`@agentclientprotocol/codex-acp`) | Apache-2.0 | Planned (`pkgs/codex-acp`) |
 
 ### Agent Gateways & Utilities
@@ -113,6 +114,7 @@ Alternatively, reference the root flake to access all tools and companion module
     # agents.overlays.junie
     # agents.overlays.cortex-code
     # agents.overlays.air-gateway
+    # agents.overlays.antigravity-acp
   };
 }
 ```
@@ -207,5 +209,5 @@ Date: 2026-10-21
 * [x] extend cortex-code with ACP support (native out-of-the-box)
 * [x] verify OpenCode ACP support: native ACP (`opencode acp`) is supported out-of-the-box and agent CLI is maintained in upstream Home Manager (no flake required in this repository)
 * [x] add standalone flake for [JetBrains Air Gateway (Central CLI)](https://www.jetbrains.com/air/gateway/) (`pkgs/air-gateway`)
-* [ ] integrate standalone ACP bridge flake for [Google Antigravity](https://github.com/agentclientprotocol/registry/blob/main/antigravity-acp/agent.json) (`pkgs/antigravity-acp`)
+* [x] integrate standalone ACP bridge flake for [Google Antigravity](https://github.com/agentclientprotocol/registry/blob/main/antigravity-acp/agent.json) (`pkgs/antigravity-acp`)
 * [ ] integrate standalone ACP bridge flake for [Codex](https://github.com/agentclientprotocol/registry/blob/main/codex-acp/agent.json) (`pkgs/codex-acp`)

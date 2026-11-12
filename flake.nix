@@ -17,6 +17,7 @@
       cortexCodeOutputs = import ./pkgs/cortex-code/outputs.nix inputs;
       airGatewayOutputs = import ./pkgs/air-gateway/outputs.nix inputs;
       antigravityAcpOutputs = import ./pkgs/antigravity-acp/outputs.nix inputs;
+      codexAcpOutputs = import ./pkgs/codex-acp/outputs.nix inputs;
     in
     utils.lib.eachSystem supportedSystems (system:
       let
@@ -55,6 +56,7 @@
           cortex-code = cortexCodeOutputs.packages.${system}.cortex-code;
           air-gateway = airGatewayOutputs.packages.${system}.air-gateway;
           antigravity-acp = antigravityAcpOutputs.packages.${system}.antigravity-acp;
+          codex-acp = codexAcpOutputs.packages.${system}.codex-acp;
           default = junieOutputs.packages.${system}.junie;
         };
 
@@ -65,7 +67,7 @@
 
           shellHook = ''
             echo "Nix Flakes Management Shell"
-            echo "Available commands: nix run .#update-flakes, nix run .#update-junie, nix run .#update-cortex-code, nix run .#update-air-gateway, nix run .#update-antigravity-acp"
+            echo "Available commands: nix run .#update-flakes, nix run .#update-junie, nix run .#update-cortex-code, nix run .#update-air-gateway, nix run .#update-antigravity-acp, nix run .#update-codex-acp"
           '';
         };
 
@@ -77,6 +79,7 @@
             bash scripts/update_cortex_code.sh
             bash scripts/update_air_gateway.sh
             bash scripts/update_antigravity_acp.sh
+            bash scripts/update_codex_acp.sh
             echo "All flakes updated."
           '';
 
@@ -95,6 +98,10 @@
           update-antigravity-acp = mkUpdateApp "update-antigravity-acp" "Update the Google Antigravity ACP flake metadata and locks" ''
             exec bash scripts/update_antigravity_acp.sh
           '';
+
+          update-codex-acp = mkUpdateApp "update-codex-acp" "Update the OpenAI Codex ACP flake metadata and locks" ''
+            exec bash scripts/update_codex_acp.sh
+          '';
         };
       }
     ) // {
@@ -104,6 +111,7 @@
         cortex-code = cortexCodeOutputs.homeManagerModules.cortex-code;
         air-gateway = airGatewayOutputs.homeManagerModules.air-gateway;
         antigravity-acp = antigravityAcpOutputs.homeManagerModules.antigravity-acp;
+        codex-acp = codexAcpOutputs.homeManagerModules.codex-acp;
       };
 
       # Aggregate Overlays from shared sub-flake outputs
@@ -112,11 +120,13 @@
         cortex-code = cortexCodeOutputs.overlays.cortex-code;
         air-gateway = airGatewayOutputs.overlays.air-gateway;
         antigravity-acp = antigravityAcpOutputs.overlays.antigravity-acp;
+        codex-acp = codexAcpOutputs.overlays.codex-acp;
         default = final: prev:
           (junie final prev)
           // (cortex-code final prev)
           // (air-gateway final prev)
-          // (antigravity-acp final prev);
+          // (antigravity-acp final prev)
+          // (codex-acp final prev);
       };
     };
 }

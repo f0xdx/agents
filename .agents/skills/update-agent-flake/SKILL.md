@@ -23,6 +23,7 @@ Before running the update script, optionally check if upstream source mechanisms
 * Cortex Code: Check Snowflake S3 bucket prefix (`sfc-repo.snowflakecomputing.com/cortex-code-cli/a4643c4278/stable_version.txt`) and `cortex-code/agent.json` in the ACP Registry.
 * Air Gateway: Check `https://central-cli.labs.jb.gg/install.sh` and S3 bucket (`https://jetbrains-central-cli.s3.eu-west-1.amazonaws.com/central/stable/version.txt`).
 * Antigravity ACP: Check `antigravity-acp/agent.json` in the ACP Registry (`https://raw.githubusercontent.com/agentclientprotocol/registry/main/antigravity-acp/agent.json`).
+* Codex ACP: Check `codex-acp/agent.json` in the ACP Registry (`https://raw.githubusercontent.com/agentclientprotocol/registry/main/codex-acp/agent.json`) and npm registry (`https://registry.npmjs.org/@agentclientprotocol/codex-acp`).
 
 ### 3. Execute Update
 

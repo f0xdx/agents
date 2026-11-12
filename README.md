@@ -32,6 +32,7 @@ nix run .#update-junie
 nix run .#update-cortex-code
 nix run .#update-air-gateway
 nix run .#update-antigravity-acp
+nix run .#update-codex-acp
 ```
 
 ## Available Flakes
@@ -48,7 +49,7 @@ nix run .#update-antigravity-acp
 | Flake | Description | ACP Implementation | License | Directory |
 |---|---|---|---|---|
 | Antigravity ACP | Google Antigravity ACP Server | Prebuilt Binary (`agy_acp_server.par`) | Proprietary ([Terms](https://antigravity.google/terms)) | [`pkgs/antigravity-acp`](./pkgs/antigravity-acp) |
-| Codex ACP | OpenAI Codex ACP Adapter | npm package (`@agentclientprotocol/codex-acp`) | Apache-2.0 | Planned (`pkgs/codex-acp`) |
+| Codex ACP | OpenAI Codex ACP Adapter | npm package (`@agentclientprotocol/codex-acp`) | Apache-2.0 | [`pkgs/codex-acp`](./pkgs/codex-acp) |
 
 ### Agent Gateways & Utilities
 
@@ -81,6 +82,7 @@ Example in your `flake.nix`:
 
     # Reference a standalone ACP bridge flake directly
     antigravity-acp.url = "github:<username>/agents?dir=pkgs/antigravity-acp";
+    codex-acp.url = "github:<username>/agents?dir=pkgs/codex-acp";
 
     # Reference an agent utility flake directly
     air-gateway.url = "github:<username>/agents?dir=pkgs/air-gateway";
@@ -104,6 +106,8 @@ Alternatively, reference the root flake to access all tools and companion module
     # Standalone ACP Bridge (Package & HM Module)
     # agents.packages.${system}.antigravity-acp
     # agents.homeManagerModules.antigravity-acp
+    # agents.packages.${system}.codex-acp
+    # agents.homeManagerModules.codex-acp
 
     # Agent Gateway Utility (Package & HM Module)
     # agents.packages.${system}.air-gateway
@@ -115,6 +119,7 @@ Alternatively, reference the root flake to access all tools and companion module
     # agents.overlays.cortex-code
     # agents.overlays.air-gateway
     # agents.overlays.antigravity-acp
+    # agents.overlays.codex-acp
   };
 }
 ```
@@ -164,7 +169,7 @@ programs.junie = {
 };
 ```
 
-For agents managed upstream in Home Manager (e.g., Antigravity):
+For agents managed upstream in Home Manager (e.g., Antigravity, Codex):
 
 ```nix
 # Upstream Home Manager module manages the agent CLI
@@ -172,6 +177,10 @@ programs.antigravity.enable = true;
 
 # Standalone ACP sub-flake provides ACP companion options
 programs.antigravity.acp.enable = true;
+
+# Similarly for OpenAI Codex:
+programs.codex.enable = true;
+programs.codex.acp.enable = true;
 ```
 
 For JetBrains Air Gateway (Central CLI):
@@ -210,4 +219,4 @@ Date: 2026-10-21
 * [x] verify OpenCode ACP support: native ACP (`opencode acp`) is supported out-of-the-box and agent CLI is maintained in upstream Home Manager (no flake required in this repository)
 * [x] add standalone flake for [JetBrains Air Gateway (Central CLI)](https://www.jetbrains.com/air/gateway/) (`pkgs/air-gateway`)
 * [x] integrate standalone ACP bridge flake for [Google Antigravity](https://github.com/agentclientprotocol/registry/blob/main/antigravity-acp/agent.json) (`pkgs/antigravity-acp`)
-* [ ] integrate standalone ACP bridge flake for [Codex](https://github.com/agentclientprotocol/registry/blob/main/codex-acp/agent.json) (`pkgs/codex-acp`)
+* [x] integrate standalone ACP bridge flake for [Codex](https://github.com/agentclientprotocol/registry/blob/main/codex-acp/agent.json) (`pkgs/codex-acp`)

@@ -1,0 +1,53 @@
+name: Daily Flake Updates
+
+on:
+  schedule:
+    # Run daily at 06:00 UTC
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run updates and checks without pushing commits or mutating issues/PRs"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  models: read
+
+concurrency:
+  group: flake-updates
+  cancel-in-progress: false
+
+jobs:
+  update-flakes:
+    name: Update & Verify Agent Flakes
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Configure Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Run isolated flake updates, verification, and AI failure triage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+        run: |
+          if [[ "${{ inputs.dry_run }}" == "true" ]]; then
+            nix run .#ci-update-flakes -- --dry-run
+          else
+            nix run .#ci-update-flakes
+          fi

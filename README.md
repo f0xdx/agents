@@ -1,139 +1,165 @@
-# Nix Flake Collection
+# Agent Flakes
 
-This repository is a collection of [Nix Flakes](https://nixos.wiki/wiki/Flakes)
-for various AI agents and tools. Each tool is self-contained within its own
-directory in `pkgs/`.
+[![Update Flakes](https://github.com/f0xdx/agents/actions/workflows/update-flakes.yml/badge.svg)](https://github.com/f0xdx/agents/actions/workflows/update-flakes.yml)
 
-## Repository Management
+A curated collection of [Nix Flakes](https://nixos.wiki/wiki/Flakes), [Home Manager](https://github.com/nix-community/home-manager) modules, and Nixpkgs overlays for AI coding agents, [Agent Client Protocol (ACP)](https://agentclientprotocol.com/) bridges, and agent gateways.
 
-This root directory contains a management flake that aggregates all tools and
-provides maintenance scripts.
+All packages are updated daily via automated CI, locked with fixed-output hashes for pure Nix evaluation, and supported across `x86_64-linux`, `aarch64-linux`, and `aarch64-darwin`.
 
-### Management Shell
+## Overview
 
-To get a shell with all required management tools (`jq`, `curl`, `nix`):
+This repository complements upstream Home Manager by packaging agent tooling where upstream gaps exist:
 
-```bash
-nix develop
-```
+* Standalone CLI coding agents not yet available in upstream Nixpkgs or Home Manager
+* Companion ACP bridge servers for upstream agents that do not natively speak ACP
+* Local agent gateways and routing proxies
+* A uniform Home Manager ACP contract (`programs.<agent>.acp.{enable,command,args,env}`) so editors like Zed, Neovim, and Emacs can configure any agent's ACP server identically
 
-### Update Tools
+Each tool lives in its own self-contained flake under [`pkgs/`](./pkgs) and can be consumed either individually (`?dir=pkgs/<name>`) or through the root aggregate flake.
 
-To update all tools to their latest versions:
+---
 
-```bash
-nix run .#update-flakes
-```
+## Available Packages
 
-To update a specific tool:
+### Agent CLIs
 
-```bash
-nix run .#update-junie
-nix run .#update-cortex-code
-nix run .#update-air-gateway
-nix run .#update-antigravity-acp
-nix run .#update-codex-acp
-```
+| Package | Attribute | Description | ACP Support | License | Sub-Flake |
+|---|---|---|---|---|---|
+| Junie | `junie` | JetBrains Junie CLI coding agent | Native (`junie --acp=true`) | Proprietary ([Terms](https://junie.jetbrains.com/)) | [`pkgs/junie`](./pkgs/junie) |
+| Cortex Code | `cortex-code` | Snowflake Cortex Code CLI agent (`coco`) | Native (`cortex-code acp serve`) | Proprietary ([Terms](https://docs.snowflake.com/en/user-guide/cortex-code/cortex-code-cli)) | [`pkgs/cortex-code`](./pkgs/cortex-code) |
 
-## Available Flakes
+### Standalone ACP Bridges
 
-### Repository-Managed Agent CLIs
+Companion bridges from the [ACP Registry](https://github.com/agentclientprotocol/registry) for agents whose CLI is already packaged in upstream Home Manager:
 
-| Flake | Description | ACP Support | License | Directory |
-|---|---|---|---|---|
-| Junie | JetBrains Junie CLI Agent | Built-in (`junie --acp=true`) | Proprietary ([License](https://junie.jetbrains.com/)) | [`pkgs/junie`](./pkgs/junie) |
-| Cortex Code | Snowflake Cortex Code CLI Agent (`coco`) | Built-in (`cortex-code acp serve`) | Proprietary ([License & Documentation](https://docs.snowflake.com/en/user-guide/cortex-code/cortex-code-cli)) | [`pkgs/cortex-code`](./pkgs/cortex-code) |
-
-### Standalone ACP Bridges (for Upstream Home Manager Agents)
-
-| Flake | Description | ACP Implementation | License | Directory |
-|---|---|---|---|---|
-| Antigravity ACP | Google Antigravity ACP Server | Prebuilt Binary (`agy_acp_server.par`) | Proprietary ([Terms](https://antigravity.google/terms)) | [`pkgs/antigravity-acp`](./pkgs/antigravity-acp) |
-| Codex ACP | OpenAI Codex ACP Adapter | npm package (`@agentclientprotocol/codex-acp`) | Apache-2.0 | [`pkgs/codex-acp`](./pkgs/codex-acp) |
+| Package | Attribute | Description | Upstream Distribution | License | Sub-Flake |
+|---|---|---|---|---|---|
+| Antigravity ACP | `antigravity-acp` | Google Antigravity ACP server | Prebuilt binary (`agy_acp_server.par`) | Proprietary ([Terms](https://antigravity.google/terms)) | [`pkgs/antigravity-acp`](./pkgs/antigravity-acp) |
+| Codex ACP | `codex-acp` | OpenAI Codex ACP adapter | npm (`@agentclientprotocol/codex-acp`) | [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0) | [`pkgs/codex-acp`](./pkgs/codex-acp) |
 
 ### Agent Gateways & Utilities
 
-| Flake | Description | Binary | License | Directory |
-|---|---|---|---|---|
-| Air Gateway | JetBrains Air Gateway (Central CLI) proxy for connecting agents to JetBrains AI | `central` (`air-gateway`) | Proprietary ([EAP User Agreement](https://www.jetbrains.com/legal/docs/terms/jetbrains-central-cli-eap/)) | [`pkgs/air-gateway`](./pkgs/air-gateway) |
+| Package | Attribute | Description | Binaries | License | Sub-Flake |
+|---|---|---|---|---|---|
+| Air Gateway | `air-gateway` | JetBrains Air Gateway (Central CLI) local proxy connecting agents to JetBrains AI | `central`, `air-gateway` | Proprietary ([EAP Terms](https://www.jetbrains.com/legal/docs/terms/jetbrains-central-cli-eap/)) | [`pkgs/air-gateway`](./pkgs/air-gateway) |
 
-## Licenses & Unfree Packages
+---
 
-Certain agent packages, utilities, and ACP companion bridges included in this repository are distributed under upstream proprietary licenses:
-* Junie: JetBrains proprietary license (see [JetBrains Junie](https://junie.jetbrains.com/)).
-* Cortex Code: Snowflake proprietary license (see [Snowflake Cortex Code CLI Documentation](https://docs.snowflake.com/en/user-guide/cortex-code/cortex-code-cli)).
-* Air Gateway (JetBrains Central CLI): JetBrains proprietary license (see [JetBrains Central CLI EAP User Agreement](https://www.jetbrains.com/legal/docs/terms/jetbrains-central-cli-eap/)).
-* Google Antigravity ACP: Google proprietary license (see [Google Antigravity Terms](https://antigravity.google/terms)).
+## Quick Start
 
-To support pure evaluation without requiring global `--impure` flags, this repository uses a scoped `allowUnfreePredicate` in its flake outputs. By using these flakes, users acknowledge the respective proprietary licenses. Open-source bridges (e.g., Codex ACP under Apache-2.0) are governed by their respective permissive licenses.
+Run any tool directly without installing it permanently:
 
-## How to use a flake from this collection
+```bash
+nix run github:f0xdx/agents#junie -- --help
+nix run github:f0xdx/agents#cortex-code -- --help
+nix run github:f0xdx/agents#air-gateway -- --help
+nix run github:f0xdx/agents#antigravity-acp -- --help
+nix run github:f0xdx/agents#codex-acp -- --help
+```
 
-To use a specific flake in your own Nix configuration, you can reference it as
-an input using the `?dir=` parameter.
+---
 
-Example in your `flake.nix`:
+## Usage
+
+### 1. Add to Your `flake.nix`
+
+You can reference either the root repository flake (to access all packages, modules, and overlays) or an individual sub-flake using `?dir=`:
 
 ```nix
 {
   inputs = {
-    # Reference an integrated agent flake directly
-    junie.url = "github:<username>/agents?dir=pkgs/junie";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    # Reference a standalone ACP bridge flake directly
-    antigravity-acp.url = "github:<username>/agents?dir=pkgs/antigravity-acp";
-    codex-acp.url = "github:<username>/agents?dir=pkgs/codex-acp";
+    # Option A: Root flake aggregating all packages, modules, and overlays
+    agents.url = "github:f0xdx/agents";
 
-    # Reference an agent utility flake directly
-    air-gateway.url = "github:<username>/agents?dir=pkgs/air-gateway";
+    # Option B: Individual sub-flakes (only fetches metadata for that specific tool)
+    junie.url = "github:f0xdx/agents?dir=pkgs/junie";
+    antigravity-acp.url = "github:f0xdx/agents?dir=pkgs/antigravity-acp";
+    codex-acp.url = "github:f0xdx/agents?dir=pkgs/codex-acp";
+    air-gateway.url = "github:f0xdx/agents?dir=pkgs/air-gateway";
   };
 }
 ```
 
-Alternatively, reference the root flake to access all tools and companion modules:
+### 2. Home Manager Configuration
+
+Import the desired module(s) from `agents.homeManagerModules` (or from the individual sub-flake):
 
 ```nix
+{ inputs, ... }:
 {
-  inputs = {
-    agents.url = "github:<username>/agents";
+  imports = [
+    inputs.agents.homeManagerModules.junie
+    inputs.agents.homeManagerModules.cortex-code
+    inputs.agents.homeManagerModules.antigravity-acp
+    inputs.agents.homeManagerModules.codex-acp
+    inputs.agents.homeManagerModules.air-gateway
+  ];
+
+  # Repository-managed Agent CLI with native ACP support
+  programs.junie = {
+    enable = true;
+    acp.enable = true;
+    settings = { };
   };
 
-  outputs = { self, agents, ... }: {
-    # Integrated Agent (Package & HM Module)
-    # agents.packages.${system}.junie
-    # agents.homeManagerModules.junie
+  # Upstream Home Manager Agent CLIs paired with Standalone ACP Bridges
+  programs.antigravity = {
+    enable = true;
+    acp.enable = true;
+  };
 
-    # Standalone ACP Bridge (Package & HM Module)
-    # agents.packages.${system}.antigravity-acp
-    # agents.homeManagerModules.antigravity-acp
-    # agents.packages.${system}.codex-acp
-    # agents.homeManagerModules.codex-acp
+  programs.codex = {
+    enable = true;
+    acp.enable = true;
+  };
 
-    # Agent Gateway Utility (Package & HM Module)
-    # agents.packages.${system}.air-gateway
-    # agents.homeManagerModules.air-gateway
-
-    # Overlays (Root Aggregate or Individual Tools)
-    # agents.overlays.default
-    # agents.overlays.junie
-    # agents.overlays.cortex-code
-    # agents.overlays.air-gateway
-    # agents.overlays.antigravity-acp
-    # agents.overlays.codex-acp
+  # JetBrains Air Gateway (Central CLI)
+  programs.air-gateway = {
+    enable = true;
+    settings = {
+      # Merged in-place into ~/.jetbrains-central/config.json on activation,
+      # preserving runtime credentials (proxy_secret, ai_access).
+      proxy_port = 19516;
+      log_level = "info";
+    };
   };
 }
 ```
 
-### Development Shells (via Overlays)
+#### Consuming the Uniform ACP Contract in Editors
 
-To use agent commands directly by name in your development shell (e.g., `air-gateway`, `central`, `cortex-code`, `coco`, `junie`), consume the flake's overlay:
+Every agent module in this repository exposes read-only `acp.command`, `acp.args`, and `acp.env` options when `acp.enable = true`. You can wire them directly into your editor configuration (such as Zed):
+
+```nix
+{ config, ... }:
+{
+  programs.zed-editor.userSettings.agent_servers = {
+    junie = {
+      command = config.programs.junie.acp.command;
+      args = config.programs.junie.acp.args;
+      env = config.programs.junie.acp.env;
+    };
+    codex = {
+      command = config.programs.codex.acp.command;
+      args = config.programs.codex.acp.args;
+      env = config.programs.codex.acp.env;
+    };
+  };
+}
+```
+
+### 3. Nixpkgs Overlays & Development Shells
+
+Apply `agents.overlays.default` (or a tool-specific overlay such as `agents.overlays.junie`) to expose the packages directly on `pkgs`:
 
 ```nix
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    agents.url = "github:<username>/agents";
+    agents.url = "github:f0xdx/agents";
   };
 
   outputs = { self, nixpkgs, flake-utils, agents }:
@@ -147,76 +173,42 @@ To use agent commands directly by name in your development shell (e.g., `air-gat
       {
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
-            air-gateway   # provides `central` and `air-gateway`
-            cortex-code   # provides `coco` and `cortex-code`
             junie         # provides `junie`
+            cortex-code   # provides `cortex-code` and `coco`
+            air-gateway   # provides `central` and `air-gateway`
+            antigravity-acp
+            codex-acp
           ];
         };
       });
 }
 ```
 
-Individual sub-flakes also export their own scoped overlays (e.g., `air-gateway.overlays.default` or `air-gateway.overlays.air-gateway`) if you only require a specific tool.
+---
 
-### Home Manager Configuration
+## Licenses & Unfree Packages
 
-For repository-managed agents (e.g., Junie):
+Several upstream agent binaries and bridges packaged in this repository are distributed under proprietary licenses:
 
-```nix
-programs.junie = {
-  enable = true;
-  acp.enable = true; # enables native ACP server exposure
-};
+* Junie is governed by the [JetBrains Junie License Terms](https://junie.jetbrains.com/)
+* Cortex Code is governed by the [Snowflake Cortex Code CLI Terms](https://docs.snowflake.com/en/user-guide/cortex-code/cortex-code-cli)
+* Air Gateway (JetBrains Central CLI) is governed by the [JetBrains Central CLI EAP User Agreement](https://www.jetbrains.com/legal/docs/terms/jetbrains-central-cli-eap/)
+* Google Antigravity ACP is governed by the [Google Antigravity Terms of Service](https://antigravity.google/terms)
+
+To allow pure flake evaluation (`nix build`, `nix run`) without requiring global `--impure` flags or system-wide `allowUnfree = true`, this repository configures a scoped `allowUnfreePredicate` limited strictly to the unfree packages managed here (`junie`, `cortex-code`, `air-gateway`, and `antigravity-acp`). By using these flakes, you acknowledge and agree to the respective upstream license terms. Open-source packages in this collection (such as `codex-acp` under Apache-2.0) are governed by their respective permissive licenses.
+
+---
+
+## Maintenance & Contributing
+
+All flakes in this repository are automatically checked and updated daily via GitHub Actions. If you want to update packages locally:
+
+```bash
+# Update all sub-flakes and root flake.lock
+nix run .#update-flakes
+
+# Update an individual flake
+nix run .#update-junie
 ```
 
-For agents managed upstream in Home Manager (e.g., Antigravity, Codex):
-
-```nix
-# Upstream Home Manager module manages the agent CLI
-programs.antigravity.enable = true;
-
-# Standalone ACP sub-flake provides ACP companion options
-programs.antigravity.acp.enable = true;
-
-# Similarly for OpenAI Codex:
-programs.codex.enable = true;
-programs.codex.acp.enable = true;
-```
-
-For JetBrains Air Gateway (Central CLI):
-
-```nix
-programs.air-gateway = {
-  enable = true;
-  settings = {
-    # Merged in-place into ~/.jetbrains-central/config.json on activation,
-    # preserving runtime state (proxy_secret, ai_access) written by central.
-    proxy_port = 19516;
-    log_level = "info";
-  };
-};
-```
-
-After enabling `programs.air-gateway`, authenticate and connect agents manually at runtime:
-* Log in to your JetBrains AI subscription: `central login`
-* Run an agent for a single session (leaves agent config files untouched): `central run codex -- "explain this code"`
-* Permanently connect an agent (modifies the agent's writable config file in place): `central add codex`
-
-## Contributing and Maintenance
-
-Each sub-flake in `pkgs/` has its own `README.md` with specific installation
-instructions. Most flakes in this repository include automation scripts in the
-root `scripts/` directory to keep versions up to date.
-
-## TODO Extension Points
-
-Date: 2026-10-21
-
-* [x] update the cortex-code and junie agent flakes
-* [x] update [AGENTS.md](AGENTS.md) and maintenance skill for dual-model ACP architecture (integrated agent flakes vs standalone ACP bridges)
-* [x] extend junie with ACP support (native out-of-the-box)
-* [x] extend cortex-code with ACP support (native out-of-the-box)
-* [x] verify OpenCode ACP support: native ACP (`opencode acp`) is supported out-of-the-box and agent CLI is maintained in upstream Home Manager (no flake required in this repository)
-* [x] add standalone flake for [JetBrains Air Gateway (Central CLI)](https://www.jetbrains.com/air/gateway/) (`pkgs/air-gateway`)
-* [x] integrate standalone ACP bridge flake for [Google Antigravity](https://github.com/agentclientprotocol/registry/blob/main/antigravity-acp/agent.json) (`pkgs/antigravity-acp`)
-* [x] integrate standalone ACP bridge flake for [Codex](https://github.com/agentclientprotocol/registry/blob/main/codex-acp/agent.json) (`pkgs/codex-acp`)
+For full details on the repository architecture, adding new agents or ACP bridges, running the local development shell, and how automated daily updates and AI failure triage work, see [CONTRIBUTING.md](./CONTRIBUTING.md).

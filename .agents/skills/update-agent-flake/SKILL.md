@@ -38,6 +38,10 @@ Run the update command from the repository root:
   ```bash
   nix run .#update-flakes
   ```
+* For isolated per-flake updates with build verification and CI failure triage:
+  ```bash
+  nix run .#ci-update-flakes -- --dry-run
+  ```
 
 ### 4. Verify Metadata & Lockfiles
 
@@ -97,5 +101,5 @@ When adding new agent tooling:
    * If the agent is in upstream Home Manager and requires an external bridge, add it as a Standalone ACP Bridge (`pkgs/<name>-acp/`, Pattern 2).
    * If the agent is not in upstream Home Manager, add it as an Integrated Agent Flake (`pkgs/<name>/`, Pattern 1).
    * If the tool is a standalone agent gateway or utility not in upstream Home Manager, add it as a Standalone Agent Utility Flake (`pkgs/<name>/`, Pattern 3).
-3. Ensure the update script (`scripts/update_<name>.sh` or `scripts/update_<name>_acp.sh`) is registered in root `flake.nix` under `apps` and included in `update-flakes`.
+3. Ensure the update script (`scripts/update_<name>.sh` or `scripts/update_<name>_acp.sh`) is registered in root `flake.nix` under `apps`, included in `update-flakes`, and listed in `FLAKES` inside `scripts/ci_update_and_triage.sh`.
 4. Add an entry to the Agent Reference Table above.

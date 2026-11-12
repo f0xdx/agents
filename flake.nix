@@ -33,6 +33,10 @@
           git
           coreutils
           gnused
+          gnugrep
+          gawk
+          findutils
+          gh
         ];
 
         mkUpdateApp = name: description: scriptBody: {
@@ -67,7 +71,7 @@
 
           shellHook = ''
             echo "Nix Flakes Management Shell"
-            echo "Available commands: nix run .#update-flakes, nix run .#update-junie, nix run .#update-cortex-code, nix run .#update-air-gateway, nix run .#update-antigravity-acp, nix run .#update-codex-acp"
+            echo "Available commands: nix run .#update-flakes, nix run .#ci-update-flakes, nix run .#update-junie, nix run .#update-cortex-code, nix run .#update-air-gateway, nix run .#update-antigravity-acp, nix run .#update-codex-acp"
           '';
         };
 
@@ -75,12 +79,18 @@
         apps = {
           update-flakes = mkUpdateApp "update-flakes" "Update all agent flakes and lockfiles" ''
             echo "Updating all flakes..."
-            bash scripts/update_junie.sh
-            bash scripts/update_cortex_code.sh
-            bash scripts/update_air_gateway.sh
-            bash scripts/update_antigravity_acp.sh
-            bash scripts/update_codex_acp.sh
+            SKIP_ROOT_LOCK_UPDATE=1 bash scripts/update_junie.sh
+            SKIP_ROOT_LOCK_UPDATE=1 bash scripts/update_cortex_code.sh
+            SKIP_ROOT_LOCK_UPDATE=1 bash scripts/update_air_gateway.sh
+            SKIP_ROOT_LOCK_UPDATE=1 bash scripts/update_antigravity_acp.sh
+            SKIP_ROOT_LOCK_UPDATE=1 bash scripts/update_codex_acp.sh
+            echo "Updating root flake lock..."
+            nix flake update
             echo "All flakes updated."
+          '';
+
+          ci-update-flakes = mkUpdateApp "ci-update-flakes" "Run isolated per-flake updates, build verification, and AI failure triage" ''
+            exec bash scripts/ci_update_and_triage.sh "$@"
           '';
 
           update-junie = mkUpdateApp "update-junie" "Update the Junie agent flake metadata and locks" ''

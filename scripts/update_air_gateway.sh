@@ -78,6 +78,8 @@ echo "metadata.json updated successfully to version $VERSION!"
 
 echo "Updating flake locks..."
 nix flake update --flake "./$FLAKE_DIR"
-nix flake update
+if [[ "${SKIP_ROOT_LOCK_UPDATE:-0}" != "1" ]]; then
+  nix flake update
+fi
 
 echo "Air Gateway metadata and locks updated successfully."

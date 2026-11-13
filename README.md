@@ -6,7 +6,8 @@ A curated collection of [Nix Flakes](https://nixos.wiki/wiki/Flakes), [Home Mana
 
 All packages are updated daily via automated CI, locked with fixed-output hashes for pure Nix evaluation, and supported across `x86_64-linux`, `aarch64-linux`, and `aarch64-darwin`.
 
-> [!NOTE] This project is in alpha state, so expect breaking changes.
+> [!NOTE]
+> This project is in alpha state, so expect breaking changes.
 
 ## Overview
 

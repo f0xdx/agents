@@ -68,7 +68,9 @@ jq -n \
     },
     command: $command,
     args: [],
-    env: {}
+    env: {
+      AGY_BIN: "agy"
+    }
   }' > "$METADATA_FILE"
 
 echo "metadata.json updated successfully to version $VERSION!"

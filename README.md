@@ -6,6 +6,8 @@ A curated collection of [Nix Flakes](https://nixos.wiki/wiki/Flakes), [Home Mana
 
 All packages are updated daily via automated CI, locked with fixed-output hashes for pure Nix evaluation, and supported across `x86_64-linux`, `aarch64-linux`, and `aarch64-darwin`.
 
+> [!NOTE] This project is in alpha state, so expect breaking changes.
+
 ## Overview
 
 This repository complements upstream Home Manager by packaging agent tooling where upstream gaps exist:
@@ -105,7 +107,7 @@ Import the desired module(s) from `agents.homeManagerModules` (or from the indiv
   };
 
   # Upstream Home Manager Agent CLIs paired with Standalone ACP Bridges
-  programs.antigravity = {
+  programs.antigravity-cli = {
     enable = true;
     acp.enable = true;
   };

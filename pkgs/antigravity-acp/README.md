@@ -2,7 +2,7 @@
 
 This flake provides the official [Google Antigravity ACP Server](https://antigravity.google/docs/ide/extensions) (`antigravity-acp`, binary `agy_acp_server.par` and companion `localharness_external`) as a Nix package and Home Manager module.
 
-Google Antigravity CLI itself is packaged and managed in upstream Home Manager (`programs.antigravity`). This standalone flake provides the companion ACP (Agent Client Protocol) bridge according to Pattern 2 (Standalone ACP Bridge Flakes) so ACP-compatible code editors (such as Zed, Emacs, or Neovim) can interact with Antigravity uniformly.
+Google Antigravity CLI itself is packaged and managed in upstream Home Manager (`programs.antigravity-cli`, binary `agy`). This standalone flake provides the companion ACP (Agent Client Protocol) bridge according to Pattern 2 (Standalone ACP Bridge Flakes) so ACP-compatible code editors (such as Zed, Emacs, or Neovim) can interact with Antigravity uniformly without requiring the desktop IDE (`programs.antigravity`).
 
 ## Usage
 
@@ -41,14 +41,16 @@ In your Home Manager configuration:
   ];
 
   # Primary agent CLI (provided upstream by Home Manager)
-  programs.antigravity.enable = true;
+  programs.antigravity-cli.enable = true;
 
   # Standalone companion ACP bridge
-  programs.antigravity.acp.enable = true;
+  programs.antigravity-cli.acp.enable = true;
 }
 ```
 
 Alternatively, the module can be enabled via the alias `programs.antigravity-acp.enable = true;`.
+
+When `programs.antigravity-cli.enable` is enabled in your configuration, `programs.antigravity-cli.acp.env.AGY_BIN` automatically resolves to the binary path `${config.programs.antigravity-cli.package}/bin/agy`, and the ACP server wrapper prefixes `PATH` with the CLI's bin directory so the bridge reliably finds `agy` even when spawned from non-interactive GUI editor environments.
 
 ### 3. Downstream ACP Client Integration
 
@@ -58,9 +60,9 @@ Downstream editor modules (e.g. Zed, Neovim, or custom ACP wrappers) can consume
 { config, ... }: {
   # Example: wiring into an ACP editor client configuration
   programs.zed.settings.agent_servers.antigravity = {
-    command = config.programs.antigravity.acp.command;
-    args = config.programs.antigravity.acp.args;
-    env = config.programs.antigravity.acp.env;
+    command = config.programs.antigravity-cli.acp.command;
+    args = config.programs.antigravity-cli.acp.args;
+    env = config.programs.antigravity-cli.acp.env;
   };
 }
 ```
@@ -68,7 +70,7 @@ Downstream editor modules (e.g. Zed, Neovim, or custom ACP wrappers) can consume
 The options resolve to:
 * `command`: `$out/bin/agy_acp_server.par`
 * `args`: Platform-specific arguments (`["--uid="]` on Linux, `[]` on macOS)
-* `env`: Environment variables including `ANTIGRAVITY_HARNESS_PATH` pointing to `localharness_external`
+* `env`: Environment variables including `ANTIGRAVITY_HARNESS_PATH` pointing to `localharness_external` and `AGY_BIN` pointing to `agy`
 
 ### 4. Use the Package directly
 

@@ -24,5 +24,7 @@
   },
   "command": "agy_acp_server.par",
   "args": [],
-  "env": {}
+  "env": {
+    "AGY_BIN": "agy"
+  }
 }

@@ -40,7 +40,8 @@ pkgs.stdenv.mkDerivation {
     fi
 
     makeWrapper "$out/libexec/antigravity-acp/agy_acp_server.par" "$out/bin/agy_acp_server.par" \
-      --set-default ANTIGRAVITY_HARNESS_PATH "$out/libexec/antigravity-acp/localharness_external"
+      --set-default ANTIGRAVITY_HARNESS_PATH "$out/libexec/antigravity-acp/localharness_external" \
+      --set-default AGY_BIN "agy"
 
     # Provide antigravity-acp convenience symlink
     ln -s $out/bin/agy_acp_server.par $out/bin/antigravity-acp

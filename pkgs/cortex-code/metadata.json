@@ -1,17 +1,17 @@
 {
-  "version": "1.2.41+180354.07fdf614a037",
+  "version": "1.2.45+061229.2a20c0482251",
   "systems": {
     "x86_64-linux": {
-      "url": "https://sfc-repo.snowflakecomputing.com/cortex-code-cli/a4643c4278/1.2.41%2B180354.07fdf614a037/coco-1.2.41%2B180354.07fdf614a037-linux-amd64.tar.gz",
-      "sha256": "ff74d354d4633a0c35c9cce3579bb0a0a52f584263e638d8f5a7e8f4e060ab14"
+      "url": "https://sfc-repo.snowflakecomputing.com/cortex-code-cli/a4643c4278/1.2.45%2B061229.2a20c0482251/coco-1.2.45%2B061229.2a20c0482251-linux-amd64.tar.gz",
+      "sha256": "67edba6f369fbaf474a387e5c036cbb33955593567520dbd56d9119c21ca0e6e"
     },
     "aarch64-linux": {
-      "url": "https://sfc-repo.snowflakecomputing.com/cortex-code-cli/a4643c4278/1.2.41%2B180354.07fdf614a037/coco-1.2.41%2B180354.07fdf614a037-linux-arm64.tar.gz",
-      "sha256": "513fecc8f170f7e9436c81e3b757f5dbccc58b7dc4569a6bc439f86fa6aaef66"
+      "url": "https://sfc-repo.snowflakecomputing.com/cortex-code-cli/a4643c4278/1.2.45%2B061229.2a20c0482251/coco-1.2.45%2B061229.2a20c0482251-linux-arm64.tar.gz",
+      "sha256": "847a4f9fb81189755291e59277456228fd852b68cca42960e4510e9cf34e8bf8"
     },
     "aarch64-darwin": {
-      "url": "https://sfc-repo.snowflakecomputing.com/cortex-code-cli/a4643c4278/1.2.41%2B180354.07fdf614a037/coco-1.2.41%2B180354.07fdf614a037-darwin-arm64.tar.gz",
-      "sha256": "a7134bb75f2274db094173d38174415ede3ab582b0fd847ff807ee99b94cbfb8"
+      "url": "https://sfc-repo.snowflakecomputing.com/cortex-code-cli/a4643c4278/1.2.45%2B061229.2a20c0482251/coco-1.2.45%2B061229.2a20c0482251-darwin-arm64.tar.gz",
+      "sha256": "6e4f9d3e6da33c657edf062c4bc15c56c42b3d289b1446b0c166926ebe0c8cdc"
     }
   },
   "acp": {

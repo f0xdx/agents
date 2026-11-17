@@ -1,11 +1,11 @@
 {
-  "version": "2.6.0",
+  "version": "2.7.0",
   "registryId": "codex-acp",
   "npmPackage": "@agentclientprotocol/codex-acp",
   "distribution": {
     "type": "npx",
-    "tarball": "https://registry.npmjs.org/@agentclientprotocol/codex-acp/-/codex-acp-2.6.0.tgz",
-    "sha256": "8d754b69e58ec0b3820039cefe0987cb059b2ef439d20415a5e875056abaebe3"
+    "tarball": "https://registry.npmjs.org/@agentclientprotocol/codex-acp/-/codex-acp-2.7.0.tgz",
+    "sha256": "014bb39447296fe77b0548d8b897bcb8b1a02033e69d27389e93bacb110e774f"
   },
   "systems": {
     "x86_64-linux": {},

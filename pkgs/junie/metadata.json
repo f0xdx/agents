@@ -1,17 +1,17 @@
 {
-  "version": "4100.8",
+  "version": "4100.10",
   "systems": {
     "x86_64-linux": {
-      "url": "https://github.com/JetBrains/junie/releases/download/4100.8/junie-release-4100.8-linux-amd64.zip",
-      "sha256": "8deca9c3d190b2ba0eb1f8dcdc363f4b35b49f36548e42191f27d575e1320581"
+      "url": "https://github.com/JetBrains/junie/releases/download/4100.10/junie-release-4100.10-linux-amd64.zip",
+      "sha256": "802b956e309e28125891628fa852a55b76b96910b0c32dfc1b8d85f179b37c2e"
     },
     "aarch64-linux": {
-      "url": "https://github.com/JetBrains/junie/releases/download/4100.8/junie-release-4100.8-linux-aarch64.zip",
-      "sha256": "5d7df32781097babd2060f2d480d4606e80c25171256d3f43d5bf75da0f585c3"
+      "url": "https://github.com/JetBrains/junie/releases/download/4100.10/junie-release-4100.10-linux-aarch64.zip",
+      "sha256": "491021a872a35e1dfd9175ca7eba9e2769df5a9f8bbb7b1d4e5a65b61703925e"
     },
     "aarch64-darwin": {
-      "url": "https://github.com/JetBrains/junie/releases/download/4100.8/junie-release-4100.8-macos-aarch64.zip",
-      "sha256": "5799747e96716671272ae9caa2dde8e91843611d65a2ab4b9750692f006be00a"
+      "url": "https://github.com/JetBrains/junie/releases/download/4100.10/junie-release-4100.10-macos-aarch64.zip",
+      "sha256": "d9a5a964e2d86aadb576d26db759e92d3a92b0fd4ab21c5246de203a189a9da3"
     }
   },
   "acp": {

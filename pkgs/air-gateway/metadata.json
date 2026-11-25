@@ -1,17 +1,17 @@
 {
-  "version": "2.8.1",
+  "version": "2.9.0",
   "systems": {
     "x86_64-linux": {
-      "url": "https://jetbrains-central-cli.s3.eu-west-1.amazonaws.com/central/2.8.1/central_2.8.1_linux_x86_64.tar.gz",
-      "sha256": "9197704f26636076e20bcbb373e50af1fb87514088fc68725ad8ca729c776038"
+      "url": "https://jetbrains-central-cli.s3.eu-west-1.amazonaws.com/central/2.9.0/central_2.9.0_linux_x86_64.tar.gz",
+      "sha256": "f4c870c2f25fa3ecefaa9f116cddaba565ef1e627382ba65f25eae19eb800ad7"
     },
     "aarch64-linux": {
-      "url": "https://jetbrains-central-cli.s3.eu-west-1.amazonaws.com/central/2.8.1/central_2.8.1_linux_arm64.tar.gz",
-      "sha256": "6c909bcfb9601335b0b4bf66185741088ce284c9acaecfc405ba71f51bd54b5b"
+      "url": "https://jetbrains-central-cli.s3.eu-west-1.amazonaws.com/central/2.9.0/central_2.9.0_linux_arm64.tar.gz",
+      "sha256": "58d599cb0413111953ab68833c0995065d1825421945f51ed08e54c98fd86bbf"
     },
     "aarch64-darwin": {
-      "url": "https://jetbrains-central-cli.s3.eu-west-1.amazonaws.com/central/2.8.1/central_2.8.1_darwin_arm64.tar.gz",
-      "sha256": "c8ac1709c06aac532a9a1aa79a01407cafbe029b0e259e714196f3a67cae0372"
+      "url": "https://jetbrains-central-cli.s3.eu-west-1.amazonaws.com/central/2.9.0/central_2.9.0_darwin_arm64.tar.gz",
+      "sha256": "01a50ed41d06846eb266a7c72d9652ef8739953ace3876b630a4f65268cc1e63"
     }
   }
 }
